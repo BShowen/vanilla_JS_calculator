@@ -40,40 +40,67 @@ let displayValue = document.querySelector('#results');
 let allButtons = document.querySelectorAll('#btn');
     allButtons.forEach((btn=>{
         btn.addEventListener('click',()=>{
-            selectedNumbers.push(btn.value)
-            displayValue.setAttribute('value', selectedNumbers.join(''))
+
+            let toCheck = selectedNumbers.join('')
+            let chckForOperandPlusZero = /[\+\-\/\*]0/g.test(toCheck);
+            switch(chckForOperandPlusZero ){
+                case true :
+                selectedNumbers.pop();
+                selectedNumbers.push(btn.value);
+                displayValue.setAttribute('value', selectedNumbers.join(''))
+                break;
+                case false :
+                selectedNumbers.push(btn.value);
+                displayValue.setAttribute('value', selectedNumbers.join(''));
+                break;
+            }
         })
     }))
+
 
 let operands = document.querySelectorAll('#operand');
     operands.forEach((operand)=>{
         operand.addEventListener('click',()=>{
-            
-            if( (operator !== null) ){
-                b = +selectedNumbers.join('');
-                ((operator === '/') && (b === 0)) ? displayValue.setAttribute('value', 'NO NO NO, cant do that!') :  a = operate(operator,a,b);
-                operator = operand.value;
-                b = null;
-            }else if( (a === null || b === null) ){ 
-                ( a === null )? a = +selectedNumbers.join('') : b = +selectedNumbers.join('');
-                operator = operand.value;
+
+            let lastButtonClicked = selectedNumbers[selectedNumbers.length -1]
+            let check = /[\+\-\/\*]/g.test(lastButtonClicked) ; 
+
+            switch(check){
+                case true :
+                selectedNumbers.pop();
+                selectedNumbers.push(operand.value);
+                displayValue.setAttribute('value', selectedNumbers.join(''))
+                break;
+                case false :
+                selectedNumbers.push(operand.value);
+                displayValue.setAttribute('value', selectedNumbers.join(''));
+                break;
             }
-            selectedNumbers = [];
         })
     });
 
+
 let equals = document.getElementById('equals');
     equals.addEventListener('click',()=>{
-        b = +selectedNumbers.join('');
-        ((operator === '/') && (b === 0)) ? displayValue.setAttribute('value', 'NO NO NO, cant do that!') : displayValue.setAttribute('value', operate(operator,a,b) );
+        let checkForDivisionByZero = /\d+\/[0]/.test(selectedNumbers.join(''));
+        if(checkForDivisionByZero){
+            displayValue.setAttribute('value', 'To infinity and beyond!');
+            new Notification('You cant divide by zero.')
+        }else{
+            //take selectedNumbers and complete the equation following order of operations. 
+            // set display value as the result of this
+        }
+
     })
+    
 
 let clearButton = document.getElementById('clear');
     clearButton.addEventListener('click', ()=>{
+
         operator = null;
         a = null;
         b = null;
         selectedNumbers = [];
         displayValue.setAttribute('value', '');
-    })
-    
+
+    });
