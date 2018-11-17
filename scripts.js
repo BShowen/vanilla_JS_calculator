@@ -31,10 +31,11 @@ function operate (operator, a, b){
     }
 }
 
-let operator = null;
-let selectedNumbers = [];
 let a = null;
 let b = null;
+let operator = null;
+let selectedNumbers = [];
+
 let displayValue = document.querySelector('#results');
 let allButtons = document.querySelectorAll('#btn');
     allButtons.forEach((btn=>{
@@ -47,8 +48,16 @@ let allButtons = document.querySelectorAll('#btn');
 let operands = document.querySelectorAll('#operand');
     operands.forEach((operand)=>{
         operand.addEventListener('click',()=>{
-            ( a === null )? a = +selectedNumbers.join('') : b = +selectedNumbers.join('');
-            operator = operand.value;
+            
+            if( (operator !== null) ){
+                b = +selectedNumbers.join('');
+                ((operator === '/') && (b === 0)) ? displayValue.setAttribute('value', 'NO NO NO, cant do that!') :  a = operate(operator,a,b);
+                operator = operand.value;
+                b = null;
+            }else if( (a === null || b === null) ){ 
+                ( a === null )? a = +selectedNumbers.join('') : b = +selectedNumbers.join('');
+                operator = operand.value;
+            }
             selectedNumbers = [];
         })
     });
@@ -56,8 +65,7 @@ let operands = document.querySelectorAll('#operand');
 let equals = document.getElementById('equals');
     equals.addEventListener('click',()=>{
         b = +selectedNumbers.join('');
-        toDisplay = operate(operator,a,b);
-        displayValue.setAttribute('value', operate(operator,a,b) )
+        ((operator === '/') && (b === 0)) ? displayValue.setAttribute('value', 'NO NO NO, cant do that!') : displayValue.setAttribute('value', operate(operator,a,b) );
     })
 
 let clearButton = document.getElementById('clear');
@@ -68,3 +76,4 @@ let clearButton = document.getElementById('clear');
         selectedNumbers = [];
         displayValue.setAttribute('value', '');
     })
+    
