@@ -55,8 +55,8 @@ function pemdasCheck(first, second){
 }
 
 function checkForDoubleOperands(selectedOperand){
-    let lastButtonClicked = displayThis[displayThis.length -1]
-    let check = /[\+\-\/\*]/g.test(lastButtonClicked) ; 
+    const lastButtonClicked = displayThis[displayThis.length -1]
+    const check = /[\+\-\/\*]/g.test(lastButtonClicked) ; 
 
     switch(check){
         case true :
@@ -71,18 +71,53 @@ function checkForDoubleOperands(selectedOperand){
     }
 }
 
-function checkForMultipleZeros(selectedNumber){
-    const firstCheck = /^0+\d?/g.test(displayThis.join(''));
-    const secondCheck = /[\+\/\*\-]0+\d?/g.test(displayThis.join(''));
-    const thirdCheck = /^0{1}\d?/g.test(displayThis.join(''));
+function checkForMultipleZeros(selection){
 
-    if( ((firstCheck || secondCheck) && thirdCheck) ){
-        displayThis.pop();
-        displayThis.push(selectedNumber);
+    const checkForLeadingZeros = /^0*0$/g.test(displayThis.join(''));
+    const checkForZeroAfterOperand = /[\+\-\/\*][0]$/g.test(displayThis.join(''));
+
+    if(displayThis.length === 0){
+        numbers.push(selection);
+        displayThis.push(selection);
+    }else if(checkForLeadingZeros){
+        if(selection === '.'){
+            numbers.push(selection);
+            displayThis.push(selection);
+        }else{
+            numbers.pop();
+            numbers.push(selection);
+            displayThis.pop();
+            displayThis.push(selection);
+        }
+    }else if(checkForZeroAfterOperand){
+        if(selection === '.'){
+            numbers.push(selection);
+            displayThis.push(selection);
+        }else{
+            numbers.pop();
+            numbers.push(selection);
+            displayThis.pop();
+            displayThis.push(selection);
+        }
     }else{
-        displayThis.push(selectedNumber);
+        if(selection === '.'){
+            checkForMultiplePeriods(selection)
+        }else{
+            numbers.push(selection);
+            displayThis.push(selection);
+        }
     }
 }
+
+function checkForMultiplePeriods(selection){
+    let checkForPeriods = /(^\d*\.\d*?$|[\+\-\/\*]\d*?\.\d*?$)/g.test(displayThis.join(''));
+    if(checkForPeriods){
+        //Dont add the dot because the user already selected a dot for this current number. 
+    }else{
+        numbers.push(selection);
+        displayThis.push(selection);
+    }
+}   
 
 let displayThis = [];
 let numbers = []
@@ -92,14 +127,15 @@ let c = null;
 let firstOperand = null;
 let secondOperand = null;
 
+const messages = document.querySelector('#messageCenter');
 const displayValue = document.querySelector('#results');
 const numberButtons = document.querySelectorAll('#btn');
     numberButtons.forEach((btn=>{
         btn.addEventListener('click',()=>{
+            // Start here. 
+            checkForMultipleZeros(btn.value);  
+            displayValue.setAttribute('value', displayThis.join(''));  
             
-            numbers.push(btn.value);
-            checkForMultipleZeros(btn.value);
-            displayValue.setAttribute('value', displayThis.join(''));
         })
     }))
 
@@ -107,8 +143,8 @@ const numberButtons = document.querySelectorAll('#btn');
 const operands = document.querySelectorAll('#operand');
     operands.forEach((operand)=>{
         operand.addEventListener('click',()=>{
-            
-            checkForDoubleOperands(operand.value);
+
+            checkForDoubleOperands(operand.className);
 
             if(numbers.length === 0){
                 firstOperand = operand.value;
@@ -117,13 +153,10 @@ const operands = document.querySelectorAll('#operand');
                 firstOperand = operand.value;
                 numbers = [];
             }else if( (a !== null) && (b === null) ){
-        
                 b = +numbers.join(''); 
                 secondOperand = operand.value; 
                 numbers = [];
-        
                 pemdasCheck(firstOperand, secondOperand);
-                
             }else if( ((a !== null) && (b !== null)) && (c === null) ){
                 c = +numbers.join(''); 
                 numbers=[] 
@@ -132,18 +165,20 @@ const operands = document.querySelectorAll('#operand');
                 c = null; 
                 pemdasCheck(firstOperand, secondOperand);
             }
-
+            
         })
     });
 
 
 const equals = document.getElementById('equals');
     equals.addEventListener('click',()=>{
-        let checkForDivisionByZero = /\d+\/[0]/.test(displayThis.join(''));
+        const checkForDivisionByZero = /\d+\÷[0]/.test(displayThis.join(''));
         if(checkForDivisionByZero){
             displayValue.setAttribute('value', 'To infinity and beyond!');
-            new Notification('You cant divide by zero.')
+            messages.textContent = 'You can\'t divide by zero';
+            // new Notification('You can\'t divide by zero.')
         }else if(secondOperand === null){
+            messages.innerText = `${displayThis.join('')+'='}`;
             b = +numbers.join('');
             a = operate(firstOperand, a, b) 
             b = null; 
@@ -152,6 +187,7 @@ const equals = document.getElementById('equals');
             displayValue.setAttribute('value', a );
             // Done
         }else if(secondOperand !== null){
+            messages.innerText = `${displayThis.join('')}`;
             c = +numbers.join('') 
             b = operate(secondOperand, b, c) 
             c = null; 
@@ -169,7 +205,8 @@ const equals = document.getElementById('equals');
 
 const clearButton = document.getElementById('clear');
     clearButton.addEventListener('click', ()=>{
-        displayValue.removeAttribute('value');
+        displayValue.setAttribute('value' , '0');
+        messages.innerText = '';
         displayThis = [];
         numbers = [];
         a = null;
