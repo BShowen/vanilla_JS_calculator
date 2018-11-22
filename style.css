@@ -7,6 +7,11 @@
     margin: 0;
     padding: 0;
 }
+html,body{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
 body{
     background-image: url('./woodGrain.jpg');
     background-position: center;
@@ -14,19 +19,19 @@ body{
     background-size: cover;
 }
 #container{
+    align-self: center;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 4px;
-    box-shadow: inset -1px -1px 3px rgba(99, 99, 99, 0.67) , inset 1px 1px 3px rgba(99, 99, 99, 0.67) , 3px 3px 5px 1px rgba(36, 36, 36, 1) ;
+    box-shadow: inset -1px -1px 3px rgba(99, 99, 99, 0.67) , 
+                inset 1px 1px 3px rgba(99, 99, 99, 0.67) , 
+                3px 3px 5px 1px rgba(36, 36, 36, 1) ;
     display: flex;
     flex-wrap: wrap;
-    left: 390px;
-    max-height: 355px;
+    max-height: 355px; 
     max-width: 480px;
     min-height: 355px;
     min-width: 480px;
     padding: 13px;
-    position: relative;
-    top: 100px;
 }
 #displayContainer{
     align-items: flex-end;
@@ -124,12 +129,17 @@ body{
     src: url('./fonts/Allura.ttf');
 }
 #signature{
+    align-self: flex-end;
+    background-color:rgba(36, 36, 36, 0.80);
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
     position: absolute;
-    right: 30px;
-    bottom: 30px;
+    height: 9vw; 
+    width: 100%;
 }
 #signature .myName{
+    color: rgba(255, 255, 255, .80);
     font-family: Allura;
-    font-size: 65px !important;
-    color: rgba(36, 36, 36, 0.80);
+    font-size: 4vw !important;
 }
