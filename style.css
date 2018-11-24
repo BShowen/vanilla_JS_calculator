@@ -101,16 +101,10 @@ body{
     flex-grow: 1;
     margin: 2px;
 }
-#operand:hover{
+#operand:hover, #clear:hover{
     background-color: rgba(186, 186, 186, 1);
 }
-#clear:hover{
-    background-color: rgba(186, 186, 186, 1);
-}
-#operand:active{
-    background-color: rgba(161, 161, 161, 1);
-}
-#clear:active{
+#operand:active, #clear:active{
     background-color: rgba(161, 161, 161, 1);
 }
 #results{
