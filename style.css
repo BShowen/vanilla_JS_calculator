@@ -7,31 +7,35 @@
     margin: 0;
     padding: 0;
 }
-html,body{
-    display: flex;
-    justify-content: center;
-    height: 100%;
+@font-face{
+    font-family: 'Allura';
+    src: url('./fonts/Allura.ttf');
 }
 body{
-    background-image: url('./woodGrain.jpg');
+    background-image: url('./photos/woodGrain.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
+html,body{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
 #container{
-    align-self: center;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 4px;
     box-shadow: inset -1px -1px 3px rgba(99, 99, 99, 0.67) , 
-                inset 1px 1px 3px rgba(99, 99, 99, 0.67) , 
-                3px 3px 5px 1px rgba(36, 36, 36, 1) ;
+        inset 1px 1px 3px rgba(99, 99, 99, 0.67) , 
+         3px 3px 5px 1px rgba(36, 36, 36, 1) ;
     display: flex;
     flex-wrap: wrap;
-    max-height: 355px; 
+    margin: 10px;
     max-width: 480px;
-    min-height: 355px;
-    min-width: 480px;
     padding: 13px;
+    z-index: 2;
 }
 #displayContainer{
     align-items: flex-end;
@@ -41,71 +45,55 @@ body{
     width: 100%;
 }
 #numbersContainer{
+    align-items: stretch;
     display: flex;
     flex-wrap: wrap-reverse;
+    height: 222px;
     width: 75%;
 }
 #messageCenter{
     align-items: flex-end;
     color: rgba(92, 92, 92, 1);
     display: flex;
-    justify-content: flex-end;
-    height: 28px;
-    padding: 5px;
     font-size: 13px;
+    height: 28px;
+    justify-content: flex-end;
+    padding: 5px;
     width: 100%;
 }
 #operandContainer{
+    align-items: stretch;
     display: flex;
     flex-wrap: wrap;
+    height: 222px;
     width: 25%;
 }
 #btn{
     background-color: rgba(244, 244, 244, 1);
     border: 1px solid rgba(244, 244, 244, 1);
     border-radius: 1px;
-    flex-basis: 88px;
+    flex-basis: 30%;
     flex-grow: 1;
-    height: 50px;
-    margin: 2px;
+    margin: 1px;
 }
-#btn:hover{
-    background-color: rgba(219, 219, 219, 1);
-}
-#btn:active{
-    background-color: rgba(194, 194, 194, 1);
-}
+
 #equals{
     border: 1px solid rgba(74, 139, 246, 1);
     border-radius: 1px;
     background-color: rgba(74, 139, 246, 1);
     color: #fefefe;
-    flex-basis: 88px;
+    flex-basis: 30%;
     flex-grow: 1;
-    height: 50px;
-    margin: 2px;
-}
-#equals:hover{
-    background-color: rgba(26, 110, 244, 1);
-}
-#equals:active{
-    background-color:rgba(10, 86, 209, 1);
+    margin: 1px;
 }
 #operand, #clear{
     background-color: rgba(211, 211, 211, 1);
     border: 1px solid rgba(211, 211, 211, 1);
     border-radius: 1px;
     color: rgba(68, 68, 68, 1);
-    height: 40px;
     flex-basis: 88px;
     flex-grow: 1;
-    margin: 2px;
-}
-#operand:hover, #clear:hover{
-    background-color: rgba(186, 186, 186, 1);
-}
-#operand:active, #clear:active{
-    background-color: rgba(161, 161, 161, 1);
+    margin: 1px;
 }
 #results{
     background-color: rgba(247, 247, 247, 1);
@@ -118,10 +106,6 @@ body{
     text-align: right;
     width: 99%;
 }
-@font-face{
-    font-family: 'Allura';
-    src: url('./fonts/Allura.ttf');
-}
 #signature{
     align-self: flex-end;
     background-color:rgba(36, 36, 36, 0.80);
@@ -129,11 +113,33 @@ body{
     justify-content: flex-end;
     padding-right: 15px;
     position: absolute;
-    height: 9vw; 
+    height: 5.5vmax;
     width: 100%;
+    z-index: 1;
 }
 #signature .myName{
     color: rgba(255, 255, 255, .80);
     font-family: Allura;
-    font-size: 4vw !important;
+    font-size: 4vmax;
+}
+
+
+/* Pseudo classes */
+#btn:hover{
+    background-color: rgba(219, 219, 219, 1);
+}
+#btn:active{
+    background-color: rgba(194, 194, 194, 1);
+}
+#equals:hover{
+    background-color: rgba(26, 110, 244, 1);
+}
+#equals:active{
+    background-color:rgba(10, 86, 209, 1);
+}
+#operand:hover, #clear:hover{
+    background-color: rgba(186, 186, 186, 1);
+}
+#operand:active, #clear:active{
+    background-color: rgba(161, 161, 161, 1);
 }
