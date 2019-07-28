@@ -4,6 +4,6 @@ I have created a calculator that performs basic operations while following the o
 
 If you would like to learn how to create something like this I highly reccomend that you go to [The_Odin_Project's](https://www.theodinproject.com/) website and follow along their curriculum. 
 
-You can also view this project live [here](https://bshowen.github.io/vanilla_JS_calculator/)where I designed it to look very similar to [Google's](https://www.google.com/search?client=firefox-b-1-ab&q=google+calculator) calculator. 
+You can also view this project live [here](https://bshowen.github.io/vanilla_JS_calculator/) where I designed it to look very similar to [Google's](https://www.google.com/search?client=firefox-b-1-ab&q=google+calculator) calculator. 
 
 Thanks for checking this out! 
